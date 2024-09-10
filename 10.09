@@ -1,0 +1,22 @@
+import random, bcrypt
+
+lowercase = 'abcdefghijklmnoppqrstuwxyz'
+uppercase = 'ABCDEFGHIJKLMNOPQRSTUWXYZ' 
+numbers = '0123456789'
+symbols ='!@#$%^&*()'
+
+all_characters = lowercase + uppercase + numbers + symbols 
+d = int(input("podaj dlugosc hasla ")) 
+
+haslo = [random.choice(lowercase), random.choice(uppercase), random.choice(numbers), random.choice(symbols)]  
+
+while len(haslo) < d:
+    next_char = random.choice(all_characters)
+    if next_char not in haslo:
+            haslo.append(next_char)
+
+random.shuffle(haslo)   
+haslo = "".join(haslo)   
+
+hashed = bcrypt.hashpw(haslo.encode(), bcrypt.gensalt())
+print(f"hasło: {haslo}, hash: {hashed}")
